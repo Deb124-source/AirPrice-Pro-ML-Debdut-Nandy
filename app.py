@@ -205,7 +205,12 @@ if st.button("Predict Price"):
 
     input_data = input_data[required_columns]
 
+    st.write("Input columns:")
+st.write(input_data.columns.tolist())
 
+
+st.write("Model expects:")
+st.write(model.named_steps["preprocessor"].feature_names_in_.tolist())
 
     # Prediction
 
