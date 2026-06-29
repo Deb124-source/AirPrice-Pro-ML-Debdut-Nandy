@@ -176,6 +176,38 @@ st.divider()
 if st.button("Predict Price"):
 
 
+    # Get required columns from trained pipeline
+
+    required_columns = model.named_steps["preprocessor"].feature_names_in_
+
+
+    # Add missing columns
+
+    for col in required_columns:
+
+        if col not in input_data.columns:
+
+            if col in [
+                "neighbourhood_group",
+                "neighbourhood",
+                "room_type",
+                "stay_category"
+            ]:
+                input_data[col] = "Unknown"
+
+            else:
+                input_data[col] = 0
+
+
+
+    # Arrange columns same as training
+
+    input_data = input_data[required_columns]
+
+
+
+    # Prediction
+
     prediction = model.predict(
         input_data
     )
@@ -189,9 +221,4 @@ if st.button("Predict Price"):
 
     st.success(
         f"Estimated Airbnb Price: ${price} per night"
-    )
-
-
-    st.info(
-        "Prediction generated using XGBoost Regression"
     )
