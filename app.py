@@ -4,9 +4,12 @@ import joblib
 import numpy as np
 
 
-# Load model
-model = joblib.load("airbnb_price_model (1).pkl")
+@st.cache_resource
+def load_model():
+    return joblib.load("airbnb_price_model.pkl")
 
+
+model = load_model()
 
 # Page config
 st.set_page_config(
