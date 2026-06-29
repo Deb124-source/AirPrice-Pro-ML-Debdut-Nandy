@@ -141,47 +141,33 @@ else:
 
 input_data = pd.DataFrame({
 
-    "neighbourhood_group":
-    [neighbourhood_group],
+    "neighbourhood_group": [neighbourhood_group],
 
-    "neighbourhood":
-    [neighbourhood],
+    "neighbourhood": [neighbourhood],
 
-    "latitude":
-    [latitude],
+    "latitude": [latitude],
 
-    "longitude":
-    [longitude],
+    "longitude": [longitude],
 
-    "room_type":
-    [room_type],
+    "room_type": [room_type],
 
-    "minimum_nights":
-    [minimum_nights],
+    "minimum_nights": [minimum_nights],
 
-    "number_of_reviews":
-    [number_of_reviews],
+    "number_of_reviews": [number_of_reviews],
 
-    "reviews_per_month":
-    [reviews_per_month],
+    "reviews_per_month": [reviews_per_month],
 
-    "calculated_host_listings_count":
-    [host_listings],
+    "calculated_host_listings_count": [host_listings],
 
-    "availability_365":
-    [availability_365],
+    "availability_365": [availability_365],
 
-    "host_experience":
-    [host_experience],
+    "host_experience": [host_experience],
 
-    "review_intensity":
-    [review_intensity],
+    "review_intensity": [review_intensity],
 
-    "stay_category":
-    [stay_category]
+    "stay_category": [stay_category]
 
 })
-
 
 
 st.divider()
