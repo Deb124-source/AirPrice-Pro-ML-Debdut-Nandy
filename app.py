@@ -6,7 +6,7 @@ import numpy as np
 
 @st.cache_resource
 def load_model():
-    return joblib.load("airbnb_price_model.pkl")
+    return joblib.load("airbnb_price_model (1).pkl")
 
 
 model = load_model()
