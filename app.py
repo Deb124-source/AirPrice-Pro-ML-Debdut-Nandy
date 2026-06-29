@@ -5,7 +5,7 @@ import numpy as np
 
 
 # Load model
-model = joblib.load("airbnb_price_model.pkl")
+model = joblib.load("airbnb_price_model (1).pkl")
 
 
 # Page config
