@@ -5,7 +5,7 @@ import os
 
 
 # -----------------------------
-# Page Config
+# Page Setup
 # -----------------------------
 
 st.set_page_config(
@@ -13,6 +13,7 @@ st.set_page_config(
     page_icon="🏠",
     layout="wide"
 )
+
 
 
 # -----------------------------
@@ -24,10 +25,11 @@ def load_model():
 
     model_path = os.path.join(
         os.path.dirname(__file__),
-        "airbnb_price_model (1).pkl"
+        "airbnb_price_model.pkl"
     )
 
     return joblib.load(model_path)
+
 
 
 model = load_model()
@@ -39,8 +41,9 @@ model = load_model()
 # -----------------------------
 
 st.title("🏠 Airbnb Price Prediction")
+
 st.write(
-    "Predict Airbnb listing price using XGBoost Regression"
+    "Predict Airbnb listing price using your trained ML pipeline"
 )
 
 
@@ -55,7 +58,9 @@ st.divider()
 col1, col2 = st.columns(2)
 
 
+
 with col1:
+
 
     host_id = st.number_input(
         "Host ID",
@@ -75,9 +80,15 @@ with col1:
     )
 
 
-    neighbourhood = st.text_input(
+    neighbourhood = st.selectbox(
         "Neighbourhood",
-        "Midtown"
+        [
+            "Williamsburg",
+            "Harlem",
+            "Bushwick",
+            "Midtown",
+            "Upper West Side"
+        ]
     )
 
 
@@ -144,6 +155,7 @@ with col2:
 
 
 
+
 # -----------------------------
 # Feature Engineering
 # -----------------------------
@@ -173,70 +185,71 @@ else:
 
 
 
+
+
 # -----------------------------
-# Create Input Data
+# Create Dataframe
 # -----------------------------
 
 
 input_data = pd.DataFrame({
 
-    "host_id": [
-        host_id
-    ],
+    "host_id":[host_id],
 
-    "neighbourhood_group": [
+    "neighbourhood_group":[
         neighbourhood_group
     ],
 
-    "neighbourhood": [
+    "neighbourhood":[
         neighbourhood
     ],
 
-    "latitude": [
+    "latitude":[
         latitude
     ],
 
-    "longitude": [
+    "longitude":[
         longitude
     ],
 
-    "room_type": [
+    "room_type":[
         room_type
     ],
 
-    "minimum_nights": [
+    "minimum_nights":[
         minimum_nights
     ],
 
-    "number_of_reviews": [
+    "number_of_reviews":[
         number_of_reviews
     ],
 
-    "reviews_per_month": [
+    "reviews_per_month":[
         reviews_per_month
     ],
 
-    "calculated_host_listings_count": [
+    "calculated_host_listings_count":[
         calculated_host_listings_count
     ],
 
-    "availability_365": [
+    "availability_365":[
         availability_365
     ],
 
-    "host_experience": [
+    "host_experience":[
         host_experience
     ],
 
-    "review_intensity": [
+    "review_intensity":[
         review_intensity
     ],
 
-    "stay_category": [
+    "stay_category":[
         stay_category
     ]
 
 })
+
 
 
 
@@ -248,7 +261,7 @@ input_data = pd.DataFrame({
 if st.button("Predict Price"):
 
 
-    # Ensure exact training order
+    # Exact training columns
 
     required_columns = (
         model
@@ -260,6 +273,55 @@ if st.button("Predict Price"):
     input_data = input_data[
         required_columns
     ]
+
+
+
+    # Datatype correction
+
+
+    numeric_columns = [
+
+        "host_id",
+        "latitude",
+        "longitude",
+        "minimum_nights",
+        "number_of_reviews",
+        "reviews_per_month",
+        "calculated_host_listings_count",
+        "availability_365",
+        "host_experience",
+        "review_intensity"
+
+    ]
+
+
+
+    for col in numeric_columns:
+
+        input_data[col] = pd.to_numeric(
+            input_data[col]
+        )
+
+
+
+    categorical_columns = [
+
+        "neighbourhood_group",
+        "neighbourhood",
+        "room_type",
+        "stay_category"
+
+    ]
+
+
+
+    for col in categorical_columns:
+
+        input_data[col] = (
+            input_data[col]
+            .astype(str)
+        )
+
 
 
     prediction = model.predict(
