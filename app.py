@@ -141,6 +141,8 @@ else:
 
 input_data = pd.DataFrame({
 
+    "host_id": [0],
+
     "neighbourhood_group": [neighbourhood_group],
 
     "neighbourhood": [neighbourhood],
@@ -168,7 +170,6 @@ input_data = pd.DataFrame({
     "stay_category": [stay_category]
 
 })
-
 
 st.divider()
 
